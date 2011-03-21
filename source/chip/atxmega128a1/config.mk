@@ -1,0 +1,32 @@
+include $(src)/cpu/xmega/config.mk
+
+CONFIG_AVR_ARCH=107
+CONFIG_AVR_CORE=6
+CONFIG_CHIP_ATXMEGA128A1=y
+CONFIG_MEMORY_MODEL_LARGE=y
+CONFIG_NR_IRQS=125
+
+CONFIG_HAVE_OSC=y
+CONFIG_HAVE_PLL=y
+
+CONFIG_AVR_3_BYTE_PC=y
+
+CONFIG_FLASH_NEND=0xFFFF
+CONFIG_FLASH_END=0x21FFF
+CONFIG_SRAM_BASE=0x2000
+CONFIG_SRAM_TBASE=0x0
+CONFIG_SRAM_TSIZE=0x0
+CONFIG_SRAM_END=0x3FFF
+CONFIG_EEPROM_END=0x7FF
+CONFIG_EEPROM_START=0x0
+CONFIG_EEPROM_SIZE=0x800
+CONFIG_PORT_GPIO=y
+CONFIG_HAVE_EBI=y
+CONFIG_HAVE_HUGEMEM=y
+CONFIG_HAVE_TC=y
+
+include $(src)/chip/atxmega128a1/intlvl.mk
+
+config_mk		+= $(src)/chip/atxmega128a1/config.mk
+config_mk               += $(src)/chip/atxmega128a1/intlvl.mk
+platform-mkfiles	+= $(src)/chip/atxmega128a1/chip.mk

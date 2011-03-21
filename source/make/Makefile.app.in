@@ -1,0 +1,12 @@
+app		:= @APP@
+src		:= @SRCTREE@
+appsrc		:= @APPSRC@
+CONFIG		:= @CONFIG@
+TOOLCHAIN	:= @TOOLCHAIN@
+
+ifeq ($(TOOLCHAIN),GNU)
+include $(src)/make/app-gnu.mk
+endif
+ifeq ($(TOOLCHAIN),IAR)
+include $(src)/make/app-iar.mk
+endif
