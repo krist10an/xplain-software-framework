@@ -345,6 +345,131 @@ void wtk_progress_bar_set_colors(struct wtk_progress_bar *bar,
 
 //! @}
 
+/**
+ * \defgroup gfx_wtk_plot Plot widget
+ * @{
+ */
+
+
+
+/**
+ * \defgroup gfx_wtk_plot_options Plot widget options
+ * These options can be ORed together to specify the behaviour of a
+ * plot widget when creating it with \ref wtk_plot_create
+ * @{
+ */
+
+/**
+ * \name Plot orientation configuration options.
+ * For use with the option parameter of \ref wtk_plot_create
+ * @{
+ */
+
+//! Plot draws values from left to right
+#define WTK_PLOT_LEFT_TO_RIGHT    (0 << 0)
+//! Plot draws values from right to left
+#define WTK_PLOT_RIGHT_TO_LEFT    (1 << 0)
+
+//! @}
+
+/**
+ * \name Plot widget invert configuration options.
+ * For use with the option parameter of \ref wtk_plot_create
+ * @{
+ */
+//! Plot is inverted.
+#define WTK_PLOT_INVERT        (1 << 1)
+
+//! @}
+
+//! @}
+
+/**
+ * \defgroup gfx_wtk_plot_grid_options Plot widget grid options
+ * These options can be ORed together to specify the behaviour of a
+ * plot widget grid when adjusting it./ref wtk_plot_grid
+ * @{
+ */
+
+/**
+ * \name grid orientation options.
+ * For use with the option parameter of \ref wtk_plot_grid
+ * @{
+ */
+
+//! Draw horizontal grid lines along the vertical axis
+#define WTK_PLOT_GRID_VERTICAL    (1 << 0)
+//! Draw vertical grid lines along the horizontal axis
+#define WTK_PLOT_GRID_HORIZONTAL  (1 << 1)
+
+//! @}
+/**
+ * \name scale orientation options.
+ * For use with the option parameter of \ref wtk_plot_grid
+ * @{
+ */
+
+//! Draw scale notches along the vertical axis
+#define WTK_PLOT_SCALE_VERTICAL    (1 << 2)
+//! Draw scale notches along the horizontal axis
+#define WTK_PLOT_SCALE_HORIZONTAL  (1 << 3)
+
+//! @}
+
+/**
+ * \name zero line options options.
+ * For use with the option parameter of \ref wtk_plot_grid
+ * @{
+ */
+
+//! Draw the zero line
+#define WTK_PLOT_ZERO              (1 << 4)
+//! @}
+
+
+
+//! @}
+
+//! @}
+
+
+
+struct wtk_plot;
+
+bool wtk_plot_add_value(struct wtk_plot *plot, uint8_t value);
+
+void wtk_plot_grid(struct wtk_plot *plot, uint8_t scale_option,
+		uint8_t scale_spacing_x, uint8_t scale_offset_x,
+		uint8_t scale_spacing_y, uint8_t scale_offset_y,
+		gfx_color_t scale_color, gfx_color_t scale_zero_color);
+
+struct wtk_plot *wtk_plot_create(struct win_window *parent,
+		struct win_area const *area, uint8_t maximum, uint8_t datapoints,
+		gfx_color_t draw_color, struct gfx_bitmap *background,
+		uint8_t option);
+
+struct win_window *wtk_plot_as_child(struct wtk_plot *plot);
+
+void wtk_plot_set_colors(struct wtk_plot *plot,
+		gfx_color_t draw_color, struct gfx_bitmap *background);
+
+//! @}
+
+
+
+
+uint8_t wtk_rescale_value(uint8_t value, uint8_t from_scale, uint8_t to_scale);
+void wtk_copy_string(char *dest, char const *source);
+
+void wtk_shade_pixel(gfx_color_t *pixel, uint8_t alpha);
+
+//! @}
+
+
+
+
+
+
 
 uint8_t wtk_rescale_value(uint8_t value, uint8_t from_scale, uint8_t to_scale);
 void wtk_copy_string(char *dest, char const *source);

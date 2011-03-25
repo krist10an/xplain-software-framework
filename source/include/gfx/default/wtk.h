@@ -365,6 +365,26 @@ typedef uint8_t wtk_radio_group_size_t;
 
 //! @}
 
+/**
+ * \ingroup gfx_wtk_plot
+ * @{
+ */
+
+#ifndef WTK_PLOT_BORDER_COLOR
+//! Color of the plot's frame border.
+# define WTK_PLOT_BORDER_COLOR    GFX_COLOR(0, 0, 0)
+#endif
+
+#ifndef WTK_PLOT_SCALE_FACTOR
+//! Scale factor to add leftover decimals.
+# define WTK_PLOT_SCALE_FACTOR           128
+#endif
+
+#ifndef WTK_PLOT_SCALE_MARKER_LENGTH
+//! The length of the scale marker.
+# define WTK_PLOT_SCALE_MARKER_LENGTH           5
+#endif
+
 //! @}
 
 #endif /* DEFAULT_WTK_H_INCLUDED */
