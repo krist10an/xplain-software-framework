@@ -44,6 +44,7 @@ hdr-$(CONFIG_SOFTIRQ)		+= include/softirq.h
 hdr-y				+= include/status_codes.h
 hdr-y				+= include/stdint.h
 hdr-y				+= include/string.h
+hdr-y				+= include/trigtable.h
 hdr-y				+= include/types.h
 hdr-y				+= include/unaligned.h
 hdr-y				+= include/util.h
