@@ -58,6 +58,7 @@
  * - \ref gfx_wtk_radio_button
  * - \ref gfx_wtk_slider
  * - \ref gfx_wtk_label
+ * - \ref gfx_wtk_gauge
  * @{
  */
 
@@ -341,6 +342,37 @@ struct win_window *wtk_progress_bar_as_child(struct wtk_progress_bar *bar);
 uint8_t wtk_progress_bar_get_value(struct wtk_progress_bar *bar);
 bool wtk_progress_bar_set_value(struct wtk_progress_bar *bar, uint8_t value);
 void wtk_progress_bar_set_colors(struct wtk_progress_bar *bar,
+		gfx_color_t color1, gfx_color_t color2);
+		
+//! @}
+
+//! @}
+
+
+#define WTK_GAUGE_HORIZONTAL    (0 << 0)
+
+#define WTK_GAUGE_VERTICAL      (1 << 0)
+
+#define WTK_GAUGE_INVERT        (1 << 1)
+
+#define WTK_GAUGE_NORMAL        (0 << 2)
+
+#define WTK_GAUGE_CIRCLE       (1 << 2)
+
+
+
+struct wtk_gauge;
+
+struct wtk_gauge *wtk_gauge_create(struct win_window *parent,
+		struct win_area const *area, struct gfx_bitmap *background, uint8_t maximum, uint8_t value,
+		gfx_color_t fill_color, gfx_color_t background_color, gfx_color_t parent_background_color,
+		uint8_t option);
+struct win_window *wtk_gauge_as_child(struct wtk_gauge *gauge);
+uint8_t wtk_gauge_get_value(struct wtk_gauge *gauge);
+uint8_t wtk_gauge_trigtable(uint8_t angle);
+uint8_t wtk_gauge_get_test(struct wtk_gauge *gauge);
+bool wtk_gauge_set_value(struct wtk_gauge *gauge, uint8_t value);
+void wtk_gauge_set_colors(struct wtk_gauge *gauge,
 		gfx_color_t color1, gfx_color_t color2);
 
 //! @}
