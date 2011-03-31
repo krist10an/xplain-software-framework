@@ -79,27 +79,27 @@ struct wtk_plot {
 	gfx_color_t             draw_color;
 	//! Pointer to plot background bitmap.
 	struct gfx_bitmap       *background;
-	//! Configuration of scale, grid and zero-line behaviour.
-	uint8_t                 scale_option;
-	//! Space between x-axis grid/scale lines.
-	uint8_t                 scale_spacing_x;
-	//! Grid/scale offset along the x-axis.
-	uint8_t                 scale_offset_x;
-	//! Space between y-axis grid/scale lines.
-	uint8_t                 scale_spacing_y;
-	//! Grid/scale offset along the y-axis.
-	uint8_t                 scale_offset_y;
-	//! Color for the scale and grid lines.
-	gfx_color_t             scale_color;
+	//! Configuration of axis, grid and zero-line behaviour.
+	uint8_t                 axis_option;
+	//! Space between x-axis grid lines/tick marks.
+	uint8_t                 axis_spacing_x;
+	//! Grid/axis offset along the x-axis.
+	uint8_t                 axis_offset_x;
+	//! Space between y-axis grid lines/tick marks.
+	uint8_t                 axis_spacing_y;
+	//! Grid/axis offset along the y-axis.
+	uint8_t                 axis_offset_y;
+	//! Color for the tick marks and grid lines.
+	gfx_color_t             axis_color;
 	//! Color for the zero line.
-	gfx_color_t             scale_zero_color;
+	gfx_color_t             axis_zero_color;
 
 };
 
-void wtk_plot_draw(struct wtk_plot *plot,struct win_area const *area, 
+static void wtk_plot_draw(struct wtk_plot *plot,struct win_area const *area, 
 		struct win_clip_region const *clip);
 
-void wtk_plot_grid_draw(struct wtk_plot *plot,struct win_area const *area, 
+static void wtk_plot_grid_draw(struct wtk_plot *plot,struct win_area const *area, 
 		struct win_clip_region const *clip);
 
 
@@ -150,12 +150,12 @@ bool wtk_plot_add_value(struct wtk_plot *plot, uint8_t value)
 	area = win_get_area(plot->container);
 
 	// Makes the plot fit inside the window border.
-	height = area->size.y - 3;
+	height = area->size.y - 2;
 
 	// Rescales the added value to fit inside the plot
 	// and stores it in the ring buffer.
 	*(plot->plot_buffer + plot->buffer_start) = 
-			1 + wtk_rescale_value((value), maximum, height);
+			height - wtk_rescale_value((value), maximum, height-1);
 
 
 	// Increments ring buffer pointer and resets at end
@@ -174,27 +174,27 @@ bool wtk_plot_add_value(struct wtk_plot *plot, uint8_t value)
  * \brief Set grid/scale parameters.
  *
  * This function sets the grid and scale options, colors for the plot. 
- * The scale_spacing_y and scale_offset_y parameter is rescaled to fit the plot.
+ * The axis_spacing_y and axis_offset_y parameter is rescaled to fit the plot.
  * Both grid and scale can not be used on the same plot.
  * 
  * Refer to <gfx/wtk.h> for available configuration options.
  *
  * \param plot Pointer to wtk_plot struct to set colors for.
- * \param scale_option Configuration of scale, grid and zero-line behaviour.
- * \param scale_spacing_x Space between x-axis grid/scale lines.
- * \param scale_offset_x Grid/scale offset along the x-axis.
- * \param scale_spacing_y Space between y-axis grid/scale lines.
- * \param scale_offset_y Grid/scale offset along the y-axis.
- * \param scale_color Color for the scale and grid lines.
- * \param scale_zero_color Color for the zero line.
+ * \param axis_option Configuration of scale, grid and zero-line behaviour.
+ * \param axis_spacing_x Space between x-axis grid/scale lines.
+ * \param axis_offset_x Grid/scale offset along the x-axis.
+ * \param axis_spacing_y Space between y-axis grid/scale lines.
+ * \param axis_offset_y Grid/scale offset along the y-axis.
+ * \param axis_color Color for the scale and grid lines.
+ * \param axis_zero_color Color for the zero line.
  */
 
- void wtk_plot_grid(struct wtk_plot *plot,
-		uint8_t scale_option,
-		uint8_t scale_spacing_x, uint8_t scale_offset_x,
-		uint8_t scale_spacing_y, uint8_t scale_offset_y,
-		gfx_color_t scale_color,
-		gfx_color_t scale_zero_color)
+ void wtk_plot_set_grid(struct wtk_plot *plot,
+		uint8_t axis_option,
+		uint8_t axis_spacing_x, uint8_t axis_offset_x,
+		uint8_t axis_spacing_y, uint8_t axis_offset_y,
+		gfx_color_t axis_color,
+		gfx_color_t axis_zero_color)
 {
 	assert(plot);
 
@@ -204,17 +204,17 @@ bool wtk_plot_add_value(struct wtk_plot *plot, uint8_t value)
 	area = win_get_area(plot->container);
 	height = area->size.y - 3;
 
-	plot->scale_option     = scale_option;
-	plot->scale_spacing_x  = scale_spacing_x;
-	plot->scale_offset_x   = scale_offset_x;
-	plot->scale_spacing_y  = wtk_rescale_value(scale_spacing_y,
-			plot->maximum,height); 
-
-	plot->scale_offset_y   = height - wtk_rescale_value(scale_offset_y,
+	plot->axis_option     = axis_option;
+	plot->axis_spacing_x  = axis_spacing_x;
+	plot->axis_offset_x   = axis_offset_x;
+	plot->axis_spacing_y  = wtk_rescale_value(axis_spacing_y,
 			plot->maximum,height);
 
-	plot->scale_color      = scale_color;
-	plot->scale_zero_color = scale_zero_color;
+	plot->axis_offset_y   = height - wtk_rescale_value(axis_offset_y,
+			plot->maximum,height);
+
+	plot->axis_color      = axis_color;
+	plot->axis_zero_color = axis_zero_color;
 }
 
 
@@ -255,12 +255,12 @@ void wtk_plot_set_colors(struct wtk_plot *plot,
  void wtk_plot_grid_draw(struct wtk_plot *plot,struct win_area const *area, 
 		struct win_clip_region const *clip)
 {
-	uint8_t scale_option    = plot->scale_option;
-	uint8_t scale_spacing_x = plot->scale_spacing_x;
-	uint8_t scale_offset_x  = plot->scale_offset_x;
-	uint8_t scale_spacing_y = plot->scale_spacing_y;
-	uint8_t scale_offset_y  = plot->scale_offset_y;
-	uint8_t scale_color     = plot->scale_color;
+	uint8_t axis_option    = plot->axis_option;
+	uint8_t axis_spacing_x = plot->axis_spacing_x;
+	uint8_t axis_offset_x  = plot->axis_offset_x;
+	uint8_t axis_spacing_y = plot->axis_spacing_y;
+	uint8_t axis_offset_y  = plot->axis_offset_y;
+	uint8_t axis_color     = plot->axis_color;
 
 	gfx_coord_t plot_height = area->size.y - 2;
 	gfx_coord_t plot_width  = area->size.x - 2;
@@ -268,93 +268,93 @@ void wtk_plot_set_colors(struct wtk_plot *plot,
 	gfx_coord_t plot_right  = clip->origin.x + 1;
 
 	//draw lines/notches along the vertical axis:
-	if (scale_spacing_y > 0) {
+	if (axis_spacing_y > 0) {
 
-		gfx_coord_t offset = scale_offset_y;
+		gfx_coord_t offset = axis_offset_y;
 
 		// Roll offset back to top line
-		while(offset > scale_spacing_y){
-			offset -= scale_spacing_y;
+		while(offset > axis_spacing_y){
+			offset -= axis_spacing_y;
 		}
 
-		if (scale_option & WTK_PLOT_GRID_VERTICAL){
+		if (axis_option & WTK_PLOT_GRID_VERTICAL){
 
-			while(offset < plot_width){
-				gfx_draw_line(plot_right,  
+			while(offset < plot_height){
+				gfx_draw_line(plot_right,
 						plot_top + offset,
 						plot_right + plot_width,
 						plot_top + offset,
-						scale_color);
+						axis_color);
 
-				offset += scale_spacing_y;
+				offset += axis_spacing_y;
 			}
-		} else if (scale_option & WTK_PLOT_SCALE_VERTICAL){
-			while(offset < plot_width){
-				gfx_draw_line(plot_right,  
+		} else if (axis_option & WTK_PLOT_AXIS_VERTICAL){
+			while(offset < plot_height){
+				gfx_draw_line(plot_right,
 						plot_top + offset,
 						plot_right 
-						+ WTK_PLOT_SCALE_MARKER_LENGTH,
+						+ WTK_PLOT_TICK_MARKER_LENGTH,
 						plot_top + offset,
-						scale_color);
+						axis_color);
 
 				gfx_draw_line(plot_right + plot_width
-						- WTK_PLOT_SCALE_MARKER_LENGTH,  
+						- WTK_PLOT_TICK_MARKER_LENGTH,
 						plot_top + offset,
 						plot_right + plot_width,
 						plot_top + offset,
-						scale_color);
+						axis_color);
 
-				offset += scale_spacing_y;
+				offset += axis_spacing_y;
 			}
 		}
 	}
 	//draw lines/notches along the horizontal axis
-	if (scale_spacing_x > 0) {
+	if (axis_spacing_x > 0) {
 
-		gfx_coord_t offset = scale_offset_x;
+		gfx_coord_t offset = axis_offset_x;
 
 		// Roll offset back to top line
-		while(offset > scale_spacing_x){
-			offset -= scale_spacing_x;
+		while(offset > axis_spacing_x){
+			offset -= axis_spacing_x;
 		}
 
-		if (scale_option & WTK_PLOT_GRID_HORIZONTAL){
-			while(offset < plot_height){
-				gfx_draw_line(plot_right + offset,  
+		if (axis_option & WTK_PLOT_GRID_HORIZONTAL){
+			while(offset < plot_width){
+				gfx_draw_line(plot_right + offset,
 						plot_top,
-						plot_right + offset,  
+						plot_right + offset,
 						plot_top + plot_height,
-						scale_color);
+						axis_color);
 
-				offset += scale_spacing_x;
+				offset += axis_spacing_x;
 			}
-		} else if (scale_option & WTK_PLOT_SCALE_HORIZONTAL){
-			while(offset < plot_height){
-				gfx_draw_line(plot_right + offset,  
+		} else if (axis_option & WTK_PLOT_AXIS_HORIZONTAL){
+			while(offset < plot_width){
+				gfx_draw_line(plot_right + offset,
 						plot_top,
-						plot_right + offset,  
+						plot_right + offset,
 						plot_top 
-						+ WTK_PLOT_SCALE_MARKER_LENGTH,
-						scale_color);
+						+ WTK_PLOT_TICK_MARKER_LENGTH,
+						axis_color);
 
-				gfx_draw_line(plot_right + offset,  
+				gfx_draw_line(plot_right + offset,
 						plot_top + plot_height 
-						- WTK_PLOT_SCALE_MARKER_LENGTH,
-						plot_right + offset,  
+						- WTK_PLOT_TICK_MARKER_LENGTH,
+						plot_right + offset,
 						plot_top + plot_height,
-						scale_color);
+						axis_color);
 
-				offset += scale_spacing_x;
+				offset += axis_spacing_x;
 			}
 		}
 	}
 
-	if (scale_option & WTK_PLOT_ZERO){
+	if (axis_option & WTK_PLOT_ZERO){
 		gfx_draw_line(plot_right, 
-				plot_top + plot->scale_offset_y,
+				plot_top + plot->axis_offset_y,
 				plot_right +  plot_width,
-				plot_top + plot->scale_offset_y,
-				plot->scale_zero_color);
+				plot_top + plot->axis_offset_y,
+				plot->axis_zero_color);
 	} 
 }
 
@@ -384,14 +384,24 @@ void wtk_plot_set_colors(struct wtk_plot *plot,
 		} else {
 			ring_buffer_offset--;
 		}
-	} 
-
-	uint8_t x_error    = plot->spacing_error;
-	uint8_t x_current  = 1 + plot->spacing;
-	uint8_t x_previous = 1;
-	uint8_t y_current;
-	uint8_t y_previous = *(plot->plot_buffer + ring_buffer_offset);
-
+	}
+	
+	// the distance from clip to the bottom of the plot area
+	gfx_coord_t plot_bottom = area->size.y - 1; 
+	gfx_coord_t x_error    = plot->spacing_error;
+	gfx_coord_t x_current  = 1 + plot->spacing;
+	gfx_coord_t x_previous = 1;
+	gfx_coord_t y_current;
+	gfx_coord_t y_previous;
+	
+	if (option & WTK_PLOT_INVERT){
+		y_previous = plot_bottom - 
+				*(plot->plot_buffer + ring_buffer_offset);
+	} else {
+		y_previous = *(plot->plot_buffer + ring_buffer_offset);
+	}
+	
+	
 	for(uint8_t datapoint = 1; datapoint < (plot->datapoints); datapoint++)
 	{
 		//increment the datapointer around the ring buffer
@@ -401,11 +411,17 @@ void wtk_plot_set_colors(struct wtk_plot *plot,
 			} else {ring_buffer_offset--;}
 		} else {
 			ring_buffer_offset++;
-			if (ring_buffer_offset >= plot->datapoints){ 
+			if (ring_buffer_offset >= plot->datapoints){
 				ring_buffer_offset = 0;
 			}
 		}
-		y_current = *(plot->plot_buffer + ring_buffer_offset);
+		
+		if (option & WTK_PLOT_INVERT){
+			y_current = plot_bottom - *(plot->plot_buffer +
+					ring_buffer_offset);
+		} else {
+			y_current = *(plot->plot_buffer + ring_buffer_offset);
+		}
 
 		gfx_draw_line(clip->origin.x + x_previous, 
 			clip->origin.y + y_previous,
@@ -418,9 +434,9 @@ void wtk_plot_set_colors(struct wtk_plot *plot,
 		x_current += plot->spacing;
 		x_error   += plot->spacing_error;
 
-		/* Adds together the leftover decimals of spacing error and 
-		 * adds one to the spacing between two datapoints when it
-		 * exceeds 1.
+		/* Add together the fixed-point remainder from plot->spacing and 
+		 * add one to the spacing between two datapoints when it
+		 * exceeds a full pixel.
 		 */
 		if (x_error >= WTK_PLOT_SCALE_FACTOR){
 			x_current++;
@@ -564,17 +580,19 @@ struct wtk_plot *wtk_plot_create(struct win_window *parent,
 	// Initialize the plot data.
 	plot->maximum = maximum;
 	plot->datapoints = datapoints;
+	plot->buffer_start=0;
 	plot->option = option;
 	plot->draw_color = draw_color;
 	plot->background = background;
 
-	plot->scale_option     = 0;
-	plot->scale_spacing_x  = 0;
-	plot->scale_offset_x   = 0;
-	plot->scale_spacing_y  = 0;
-	plot->scale_offset_y   = 0;
-	plot->scale_color      = 0;
-	plot->scale_zero_color = 0;
+
+	plot->axis_option     = 0;
+	plot->axis_spacing_x  = 0;
+	plot->axis_offset_x   = 0;
+	plot->axis_spacing_y  = 0;
+	plot->axis_offset_y   = 0;
+	plot->axis_color      = 0;
+	plot->axis_zero_color = 0;
 
 	/* Do sanity check of specified window area parameters
 	 * according to the orientation of the plot.
@@ -585,12 +603,14 @@ struct wtk_plot *wtk_plot_create(struct win_window *parent,
 
 	// Makes the plot fit inside the window border.
 	length = attr.area.size.x;
-	length -= 3;
+	length -= 2;
 
-	// Calculates the current spacing error.
+	// Calculate the spacing between datapoints.
 	plot->spacing = length / (datapoints - 1);
+	
+	// Calculate the fixed-point remainder of the above operation.
 	plot->spacing_error = (uint8_t)(
-		(((uint16_t)(length-plot->spacing*(datapoints - 1)))
+		(((uint16_t)(length - plot->spacing*(datapoints - 1)))
 		* WTK_PLOT_SCALE_FACTOR) / ((uint16_t)(datapoints - 1)));
 
 	// Set up handling information.
@@ -603,7 +623,11 @@ struct wtk_plot *wtk_plot_create(struct win_window *parent,
 		attr.behavior = 0;
 	} else {
 		attr.background = NULL;
-		attr.behavior = WIN_BEHAVIOR_REDRAW_PARENT;
+		if (option & WTK_PLOT_DONT_REDRAW_PARENT){
+			attr.behavior = 0;
+		} else {
+			attr.behavior = WIN_BEHAVIOR_REDRAW_PARENT;
+		}
 	}
 
 	// Create a new window for the plot.
