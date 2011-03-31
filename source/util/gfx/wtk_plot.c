@@ -554,7 +554,7 @@ struct wtk_plot *wtk_plot_create(struct win_window *parent,
 		uint8_t datapoints, gfx_color_t draw_color,
 		struct gfx_bitmap *background, uint8_t option)
 {
-	uint8_t length;
+	uint16_t length;
 
 	// Do sanity check on parameters.
 	assert(maximum > 0);
