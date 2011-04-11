@@ -420,15 +420,15 @@ void wtk_progress_bar_set_colors(struct wtk_progress_bar *bar,
 //! @}
 
 /**
- * \name scale orientation options.
+ * \name axis orientation options.
  * For use with the option parameter of \ref wtk_plot_grid
  * @{
  */
 
 //! Draw tick marks along the vertical axis
-#define WTK_PLOT_AXIS_VERTICAL    (1 << 2)
+#define WTK_PLOT_TICKS_VERTICAL    (1 << 2)
 //! Draw tick marks along the horizontal axis
-#define WTK_PLOT_AXIS_HORIZONTAL  (1 << 3)
+#define WTK_PLOT_TICKS_HORIZONTAL  (1 << 3)
 
 //! @}
 
