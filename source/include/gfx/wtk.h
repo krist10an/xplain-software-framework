@@ -58,6 +58,8 @@
  * - \ref gfx_wtk_radio_button
  * - \ref gfx_wtk_slider
  * - \ref gfx_wtk_label
+ * - \ref gfx_wtk_gauge
+ * - \ref gfx_wtk_trigtable
  * @{
  */
 
@@ -263,8 +265,6 @@ void wtk_radio_button_size_hint(struct win_point *size, const char *caption);
 
 //! @}
 
-//! @}
-
 struct wtk_slider;
 
 struct wtk_slider *wtk_slider_create(struct win_window *parent,
@@ -342,6 +342,43 @@ uint8_t wtk_progress_bar_get_value(struct wtk_progress_bar *bar);
 bool wtk_progress_bar_set_value(struct wtk_progress_bar *bar, uint8_t value);
 void wtk_progress_bar_set_colors(struct wtk_progress_bar *bar,
 		gfx_color_t color1, gfx_color_t color2);
+		
+//! @}
+
+//! @}
+/**
+ * \defgroup gfx_wtk_gauge Gauge widget
+ *
+ * Gauge widget provides a gauge. Size and position can be configured.
+ * Can take input from userdefinable input.
+ * @{
+ */
+
+
+//! Inverts the gauge traveling direction
+#define WTK_GAUGE_INVERT        (1 << 1)
+//! Unused: for drawing a normal 90deg gauge
+#define WTK_GAUGE_NORMAL        (0 << 2)
+//! Unused: for drawing a 360deg gauge
+#define WTK_GAUGE_CIRCLE        (1 << 2)
+
+//! Enables the use of thick indicator lines, comment out for thinner line.
+#define CONFIG_WTK_GAUGE_USE_THICK_LINE
+
+struct wtk_gauge;
+
+struct wtk_gauge *wtk_gauge_create(struct win_window *parent,
+		struct win_area const *area, struct gfx_bitmap *background, uint8_t maximum, uint8_t value, uint8_t g_outer_pos, uint8_t g_inner_pos,
+		gfx_color_t fill_color, gfx_color_t background_color, gfx_color_t parent_background_color,
+		uint8_t option);
+struct win_window *wtk_gauge_as_child(struct wtk_gauge *gauge);
+uint8_t wtk_gauge_get_value(struct wtk_gauge *gauge);
+uint8_t wtk_trigtable_sin(uint8_t angle);
+uint8_t wtk_trigtable_cos(uint8_t angle);
+uint8_t wtk_gauge_get_test(struct wtk_gauge *gauge);
+bool wtk_gauge_set_value(struct wtk_gauge *gauge, uint8_t value);
+void wtk_gauge_set_colors(struct wtk_gauge *gauge,
+		gfx_color_t color1, gfx_color_t color2);
 
 //! @}
 
@@ -350,6 +387,19 @@ uint8_t wtk_rescale_value(uint8_t value, uint8_t from_scale, uint8_t to_scale);
 void wtk_copy_string(char *dest, char const *source);
 
 void wtk_shade_pixel(gfx_color_t *pixel, uint8_t alpha);
+ 
+ /**
+ * \defgroup gfx_wtk_trigtable Trigonometric sine table
+ *
+ * Contains a table holding trigonometric sine values from zero to ninety
+ * degrees. Useful for drawing i.e. circles. 
+ *
+ * Contains two different functions for getting sin- and cos-values
+ *
+ * Best suited for small drawings, as the resolution of the table is quite low
+ * @{
+ */
+
 
 //! @}
 
