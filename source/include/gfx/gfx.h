@@ -177,6 +177,25 @@
 #define GFX_SWITCH_XY 4
 //@}
 
+
+#ifdef CONFIG_GRADIENT
+//! \name Flags for gradients
+//@{
+//! Bitmask for horizontal gradients.
+#define GFX_GRADIENT_VERTICAL (0<<0)
+//! Bitmask for vertical gradients.
+#define GFX_GRADIENT_HORIZONTAL (1<<0)
+//! Bitmask for inverted gradients
+#define GFX_GRADIENT_INVERT (1<<1)
+//! Bitmask for mirrored gradients
+#define GFX_GRADIENT_MIRROR (1<<2)
+
+
+
+//@}
+
+#endif
+
 /**
  * \name Screen geometry and clipping variables
  * \internal
@@ -273,8 +292,47 @@ enum gfx_bitmap_type {
 	//! Bitmap stored in hugemem
 	BITMAP_HUGEMEM,
 #endif
+#ifdef CONFIG_GRADIENT
+	//! Gradient bitmap.
+	BITMAP_GRADIENT,
+#endif
 };
 
+#ifdef CONFIG_GRADIENT
+ 
+/**
+ * \brief Storage structure for gradient data and metadata
+ */
+ struct gfx_gradient {
+	//! Starting RGB red value
+	uint8_t start_r;
+	//! Starting RGB green value
+	uint8_t start_g;
+	//! Starting RGB blue value
+	uint8_t start_b;
+	//! Change in RGB red value per line.
+	int16_t delta_r;
+	//! Change in RGB green value per line.
+	int16_t delta_g;
+	//! Change in RGB blue value per line.
+	int16_t delta_b;
+	//! Configuration of orientation and behavior.
+	uint8_t option;
+	//! Length in pixels along the gradient.
+	gfx_coord_t length;
+ };
+ 
+void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option);
+
+void gfx_gradient_set_values(struct gfx_gradient *gradient,
+		uint8_t red_from, uint8_t green_from, uint8_t blue_from,
+		uint8_t red_to,   uint8_t green_to,   uint8_t blue_to,
+		gfx_coord_t length, uint8_t option);
+
+void gfx_gradient_draw(struct gfx_gradient *gradient, gfx_coord_t map_x,
+		gfx_coord_t map_y,gfx_coord_t x, gfx_coord_t y,
+		gfx_coord_t width,gfx_coord_t height);
+ #endif
 /**
  * \brief Storage structure for bitmap pixel data and metadata
  */
@@ -295,6 +353,10 @@ struct gfx_bitmap {
 #ifdef CONFIG_HUGEMEM
 		//! Pointer to pixels for bitmap stored in hugemem
 		hugemem_ptr_t                      hugemem;
+#endif
+#ifdef CONFIG_GRADIENT
+		//! Pointer to gradient data
+		struct gfx_gradient               *gradient;
 #endif
 	}                                      data;
 };
