@@ -236,7 +236,7 @@ typedef uint16_t wtk_string_size_t;
 
 #ifndef WTK_CHECKBOX_SELECT_COLOR
 //! Checkbox square select mark color.
-# define WTK_CHECKBOX_SELECT_COLOR  GFX_COLOR(255, 215, 0)
+# define WTK_CHECKBOX_SELECT_COLOR  GFX_COLOR(128, 0, 0)
 #endif
 
 #ifndef WTK_CHECKBOX_CAPTION_COLOR
@@ -286,7 +286,7 @@ typedef uint8_t wtk_radio_group_size_t;
 
 #ifndef WTK_RADIOBUTTON_SELECT_COLOR
 //! Radio button select mark color.
-# define WTK_RADIOBUTTON_SELECT_COLOR  GFX_COLOR(255, 215, 0)
+# define WTK_RADIOBUTTON_SELECT_COLOR  GFX_COLOR(128, 0, 0)
 #endif
 
 #ifndef WTK_RADIOBUTTON_CAPTION_COLOR
@@ -331,7 +331,7 @@ typedef uint8_t wtk_radio_group_size_t;
 
 #ifndef WTK_SLIDER_KNOB_COLOR_NORMAL
 //! Color of the slider knob when normal.
-# define WTK_SLIDER_KNOB_COLOR_NORMAL    GFX_COLOR(255, 215, 0)
+# define WTK_SLIDER_KNOB_COLOR_NORMAL    GFX_COLOR(128, 0, 0)
 #endif
 
 #ifndef WTK_SLIDER_KNOB_COLOR_MOVING
@@ -373,6 +373,11 @@ typedef uint8_t wtk_radio_group_size_t;
 #ifndef WTK_TRIG_TABLE_LENGTH
 //! Trigtable length.
 # define WTK_TRIG_TABLE_LENGTH        128
+#endif
+
+#ifndef CONFIG_WTK_GAUGE_USE_THICK_LINE
+//! Enables the use of thick indicator lines, comment out for thinner line.
+# define CONFIG_WTK_GAUGE_USE_THICK_LINE
 #endif
 
 //! @}

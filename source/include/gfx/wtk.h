@@ -277,6 +277,8 @@ bool wtk_slider_set_value(struct wtk_slider *slider, uint8_t value);
 
 //! @}
 
+//! @}
+
 /**
  * \defgroup gfx_wtk_label Label widget
  * @{
@@ -345,7 +347,6 @@ void wtk_progress_bar_set_colors(struct wtk_progress_bar *bar,
 		
 //! @}
 
-//! @}
 /**
  * \defgroup gfx_wtk_gauge Gauge widget
  *
@@ -357,20 +358,14 @@ void wtk_progress_bar_set_colors(struct wtk_progress_bar *bar,
 
 //! Inverts the gauge traveling direction
 #define WTK_GAUGE_INVERT        (1 << 1)
-//! Unused: for drawing a normal 90deg gauge
-#define WTK_GAUGE_NORMAL        (0 << 2)
-//! Unused: for drawing a 360deg gauge
-#define WTK_GAUGE_CIRCLE        (1 << 2)
-
-//! Enables the use of thick indicator lines, comment out for thinner line.
-#define CONFIG_WTK_GAUGE_USE_THICK_LINE
 
 struct wtk_gauge;
 
 struct wtk_gauge *wtk_gauge_create(struct win_window *parent,
-		struct win_area const *area, struct gfx_bitmap *background, uint8_t maximum, uint8_t value, uint8_t g_outer_pos, uint8_t g_inner_pos,
-		gfx_color_t fill_color, gfx_color_t background_color, gfx_color_t parent_background_color,
-		uint8_t option);
+		struct win_area const *area, struct gfx_bitmap *background,
+		uint8_t maximum, uint8_t value, uint8_t g_outer_pos,
+		uint8_t g_inner_pos, gfx_color_t fill_color,
+		gfx_color_t background_color, uint8_t option);
 struct win_window *wtk_gauge_as_child(struct wtk_gauge *gauge);
 uint8_t wtk_gauge_get_value(struct wtk_gauge *gauge);
 uint8_t wtk_trigtable_sin(uint8_t angle);
