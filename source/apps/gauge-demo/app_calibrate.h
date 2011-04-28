@@ -41,7 +41,7 @@
 #include <mainloop.h>
 
 /**
- * \ingroup apps_training_group
+ * \ingroup apps_demo_group
  * \defgroup app_calibrate_group Touch screen calibration application
  *
  * \brief This application performs touch screen calibration by utilizing the

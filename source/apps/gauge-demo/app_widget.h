@@ -41,7 +41,7 @@
 #include <mainloop.h>
 
 /**
- * \ingroup apps_training_group
+ * \ingroup apps_demo_group
  * \defgroup app_widget_group Gauge demo application
  *
  * \brief This application is made to introduce users to the gauge widget
