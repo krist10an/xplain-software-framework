@@ -375,9 +375,55 @@ typedef uint8_t wtk_radio_group_size_t;
 # define WTK_TRIG_TABLE_LENGTH        128
 #endif
 
+#ifndef WTK_TRIG_TABLE_MAX_VALUE
+//! Trigtable max value.
+# define WTK_TRIG_TABLE_MAX_VALUE     255
+#endif
+
+//! @}
+
+/**
+ * \ingroup gfx_wtk_gauge_options
+ * @{
+ */
 #ifndef CONFIG_WTK_GAUGE_USE_THICK_LINE
 //! Enables the use of thick indicator lines, comment out for thinner line.
 # define CONFIG_WTK_GAUGE_USE_THICK_LINE
+#endif
+
+#ifndef WTK_GAUGE_OUTER_LINE_COLOR
+//! Defines the color of the outer line around the gauge.
+# define WTK_GAUGE_OUTER_LINE_COLOR   GFX_COLOR(0, 0, 0)
+#endif
+
+#ifndef WTK_GAUGE_INNER_LINE_COLOR
+//! Defines the color of the inner line around the gauge.
+# define WTK_GAUGE_INNER_LINE_COLOR   GFX_COLOR(0, 0, 0)
+#endif
+
+#ifndef WTK_GAUGE_NEEDLE_COLOR
+//! Defines the color of the gauge needle.
+# define WTK_GAUGE_NEEDLE_COLOR       GFX_COLOR(170, 0, 0)
+#endif
+
+#ifndef WTK_GAUGE_OUTER_FILL_COLOR
+//! Defines the color of the outer filled area
+# define WTK_GAUGE_OUTER_FILL_COLOR   GFX_COLOR(100, 100, 100)
+#endif
+
+#ifndef WTK_GAUGE_INNER_FILL_COLOR
+//! Defines the color of the inner filled area
+# define WTK_GAUGE_INNER_FILL_COLOR   GFX_COLOR(90, 90, 90)
+#endif
+
+#ifndef WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE
+//! Defines the maximum value for the needle size
+#define WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE   100
+#endif
+
+#ifndef WTK_GAUGE_MIN_NEEDLE_PERCENT_SIZE
+//! Defines the maximum value for the needle size
+#define WTK_GAUGE_MIN_NEEDLE_PERCENT_SIZE   0
 #endif
 
 //! @}
