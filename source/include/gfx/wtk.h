@@ -265,6 +265,8 @@ void wtk_radio_button_size_hint(struct win_point *size, const char *caption);
 
 //! @}
 
+//! @}
+
 struct wtk_slider;
 
 struct wtk_slider *wtk_slider_create(struct win_window *parent,
@@ -355,9 +357,24 @@ void wtk_progress_bar_set_colors(struct wtk_progress_bar *bar,
  * @{
  */
 
+ /**
+ * \defgroup gfx_wtk_gauge_options Gauge widget options
+ * These options can be ORed together to specify the behaviour of a
+ * gauge widget when creating it with \ref wtk_gauge_create
+ * @{
+ */
 
+ /**
+ * \name Gauge widget invert configuration options.
+ * For use with the option parameter of \ref wtk_gauge_create
+ * @{
+ */
 //! Inverts the gauge traveling direction
 #define WTK_GAUGE_INVERT        (1 << 1)
+
+//! @}
+
+//! @}
 
 struct wtk_gauge;
 
