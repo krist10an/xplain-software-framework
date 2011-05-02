@@ -44,7 +44,7 @@ from optparse import OptionGroup
 
 def main():
 	def write_file_to_bdev(bdev, data):
-		sector_size = int(bdev.BytesPerSector)
+		sector_size = int(bdev.BytesPerSector or 0)
 
 		print "Writing '%s' to block device '%s'... " % (image_file,
 				bdev.Caption),
@@ -143,15 +143,15 @@ def main():
 	# List disks
 	for bdev in list_of_devices:
 		try:
-			sector_size     = int(bdev.BytesPerSector)
-			total_sectors   = int(bdev.TotalSectors)
+			sector_size     = int(bdev.BytesPerSector or 0)
+			total_sectors   = int(bdev.TotalSectors or 0)
 		except:
 			print "Error: failed getting block device details."
 			print "Unexpected error:", sys.exc_info()[0]
 			sys.exit(2)
 
 		print "%i)" % bdev.Index, bdev.Caption, ("(%i KB)" %
-			(int(bdev.Size) / 1024))
+			(int(bdev.Size or 0) / 1024))
 
 		valid_indexes.append(bdev.Index)
 
