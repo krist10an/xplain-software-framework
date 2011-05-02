@@ -179,8 +179,25 @@
 
 
 #ifdef CONFIG_GRADIENT
-//! \name Flags for gradients
-//@{
+
+/**
+ * \defgroup gfx_gradient Bitmap gradients
+ * @{
+ */
+ 
+/**
+ * \defgroup gfx_gradient_options Gradient options
+ * These options can be ORed together to specify the behaviour of a
+ * gradient when generating it with \ref wtk_gradient_set_values
+ * @{
+ */
+ 
+ /**
+ * \name gradient orientation configuration options.
+ * For use with the option parameter of \ref wtk_gradient_set_values
+ * @{
+ */
+
 //! Bitmask for horizontal gradients.
 #define GFX_GRADIENT_VERTICAL (0<<0)
 //! Bitmask for vertical gradients.
@@ -192,7 +209,9 @@
 
 
 
-//@}
+//! @}
+//! @}
+//! @}
 
 #endif
 
@@ -273,6 +292,51 @@ static inline uint_fast8_t gfx_font_get_width(struct font *font)
 	return (font->width * font->scale);
 }
 
+#ifdef CONFIG_GRADIENT
+ 
+/**
+ * \ingroup gfx_gradient
+ * @{
+ */
+ 
+/**
+ * \brief Storage structure for gradient data and metadata
+ */
+ struct gfx_gradient {
+	//! Starting RGB red value
+	uint8_t start_r;
+	//! Starting RGB green value
+	uint8_t start_g;
+	//! Starting RGB blue value
+	uint8_t start_b;
+	//! Change in RGB red value per line.
+	int16_t delta_r;
+	//! Change in RGB green value per line.
+	int16_t delta_g;
+	//! Change in RGB blue value per line.
+	int16_t delta_b;
+	//! Configuration of orientation and behavior.
+	uint8_t option;
+	//! Length in pixels along the gradient.
+	gfx_coord_t length;
+ };
+ 
+
+ 
+void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option);
+
+void gfx_gradient_set_values(struct gfx_gradient *gradient,
+		uint8_t red_from, uint8_t green_from, uint8_t blue_from,
+		uint8_t red_to,   uint8_t green_to,   uint8_t blue_to,
+		gfx_coord_t length, uint8_t option);
+
+void gfx_gradient_draw(struct gfx_gradient *gradient, gfx_coord_t map_x,
+		gfx_coord_t map_y,gfx_coord_t x, gfx_coord_t y,
+		gfx_coord_t width,gfx_coord_t height);
+ 
+ //! @}
+ #endif
+ 
 /**
  * \name Bitmap functions and structures
  */
@@ -298,41 +362,7 @@ enum gfx_bitmap_type {
 #endif
 };
 
-#ifdef CONFIG_GRADIENT
  
-/**
- * \brief Storage structure for gradient data and metadata
- */
- struct gfx_gradient {
-	//! Starting RGB red value
-	uint8_t start_r;
-	//! Starting RGB green value
-	uint8_t start_g;
-	//! Starting RGB blue value
-	uint8_t start_b;
-	//! Change in RGB red value per line.
-	int16_t delta_r;
-	//! Change in RGB green value per line.
-	int16_t delta_g;
-	//! Change in RGB blue value per line.
-	int16_t delta_b;
-	//! Configuration of orientation and behavior.
-	uint8_t option;
-	//! Length in pixels along the gradient.
-	gfx_coord_t length;
- };
- 
-void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option);
-
-void gfx_gradient_set_values(struct gfx_gradient *gradient,
-		uint8_t red_from, uint8_t green_from, uint8_t blue_from,
-		uint8_t red_to,   uint8_t green_to,   uint8_t blue_to,
-		gfx_coord_t length, uint8_t option);
-
-void gfx_gradient_draw(struct gfx_gradient *gradient, gfx_coord_t map_x,
-		gfx_coord_t map_y,gfx_coord_t x, gfx_coord_t y,
-		gfx_coord_t width,gfx_coord_t height);
- #endif
 /**
  * \brief Storage structure for bitmap pixel data and metadata
  */
