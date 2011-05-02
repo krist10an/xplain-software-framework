@@ -86,24 +86,24 @@ void gfx_gradient_set_values(struct gfx_gradient *gradient,
 	fixed point math for the three colors, taking care to avoid sign 
 	bit overflow*/
 
-	if (red_from == red_to){
+	if (red_from == red_to) {
 		gradient->delta_r = 0;
 	} else {
-		gradient->delta_r =((((int16_t)(red_to - red_from)) << 7 )
+		gradient->delta_r = ((((int16_t)(red_to - red_from)) << 7)
 				/ length) << 1;
 	}
 
-	if (green_from == green_to){
+	if (green_from == green_to) {
 		gradient->delta_g = 0;
 	} else {
-		gradient->delta_g =((((int16_t)(green_to - green_from)) << 7 ) 
+		gradient->delta_g = ((((int16_t)(green_to - green_from)) << 7)
 				/ length) << 1;
 	}
 
-	if (blue_from == blue_to){
+	if (blue_from == blue_to) {
 		gradient->delta_b = 0;
 	} else {
-		gradient->delta_b =((((int16_t)(blue_to - blue_from)) << 7 )
+		gradient->delta_b =((((int16_t)(blue_to - blue_from)) << 7)
 				/ length) << 1;
 	}
 
@@ -141,7 +141,7 @@ void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option)
  * \param height    Height of gradient to draw.
  */
 
- void gfx_gradient_draw(struct gfx_gradient *gradient, 
+void gfx_gradient_draw(struct gfx_gradient *gradient,
 		gfx_coord_t map_x, gfx_coord_t map_y,
 		gfx_coord_t x, gfx_coord_t y,
 		gfx_coord_t width,gfx_coord_t height)
@@ -162,7 +162,7 @@ void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option)
 
 	/* if gradient is inverted set start color to calculated end color,
 	 * and invert delta color */
-	if ((gradient->option)&(GFX_GRADIENT_INVERT)){
+	if ((gradient->option) & (GFX_GRADIENT_INVERT)) {
 		color_r += (delta_r * (gradient->length - 1));
 		color_g += (delta_g * (gradient->length - 1));
 		color_b += (delta_b * (gradient->length - 1));
@@ -174,7 +174,7 @@ void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option)
 
 	//Draw mirrored horiontal gradients
 	if (((gradient->option) &
-			(GFX_GRADIENT_MIRROR|GFX_GRADIENT_HORIZONTAL)) == 
+			(GFX_GRADIENT_MIRROR|GFX_GRADIENT_HORIZONTAL)) ==
 			(GFX_GRADIENT_MIRROR|GFX_GRADIENT_HORIZONTAL)){
 
 		x -= map_x;
@@ -185,17 +185,17 @@ void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option)
 
 		gfx_coord_t x_middle = (gradient->length / 2);
 		gfx_coord_t x_end = x + gradient->length;
-		gfx_coord_t x_end_mirrored = gradient->length - (width + map_x); 
+		gfx_coord_t x_end_mirrored = gradient->length - (width + map_x);
 
-		for(gfx_coord_t index_x = 0; index_x <= x_middle; index_x++){
-			if (index_x >= map_x){
+		for(gfx_coord_t index_x = 0; index_x <= x_middle; index_x++) {
+			if (index_x >= map_x) {
 				gfx_draw_vertical_line(x + index_x, y, height,
 						GFX_COLOR(
 						(uint8_t)(color_r >> 8),
 						(uint8_t)(color_g >> 8),
 						(uint8_t)(color_b >> 8)));
 			}
-			if (index_x >= x_end_mirrored){
+			if (index_x >= x_end_mirrored) {
 				gfx_draw_vertical_line(x_end - index_x, y, height,
 						GFX_COLOR(
 						(uint8_t)(color_r >> 8),
@@ -209,9 +209,9 @@ void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option)
 		}
 
 	//Draw mirrored vertical gradients
-	} else 	if (((gradient->option) &
+	} else if (((gradient->option) &
 			(GFX_GRADIENT_MIRROR|GFX_GRADIENT_VERTICAL)) == 
-			(GFX_GRADIENT_MIRROR|GFX_GRADIENT_VERTICAL)){
+			(GFX_GRADIENT_MIRROR|GFX_GRADIENT_VERTICAL)) {
 
 		y -= map_y;
 
@@ -222,18 +222,18 @@ void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option)
 
 		gfx_coord_t y_middle = (gradient->length / 2);
 		gfx_coord_t y_end = y + gradient->length;
-		gfx_coord_t y_end_mirrored = gradient->length - (height + map_y); 
+		gfx_coord_t y_end_mirrored = gradient->length - (height + map_y);
 		
 		for(gfx_coord_t index_y = 0 ; index_y <= y_middle; index_y++){
 
-			if (index_y >= map_y){
+			if (index_y >= map_y) {
 				gfx_draw_horizontal_line(x, y + index_y, width,
 						GFX_COLOR(
 						(uint8_t)(color_r >> 8),
 						(uint8_t)(color_g >> 8),
 						(uint8_t)(color_b >> 8)));
 			}
-			if (index_y >= y_end_mirrored){
+			if (index_y >= y_end_mirrored) {
 				gfx_draw_horizontal_line(x, y_end - index_y, width,
 						GFX_COLOR(
 						(uint8_t)(color_r >> 8),
@@ -248,7 +248,7 @@ void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option)
 
 	} else {
 		//Draw horizontal gradients
-		if ((gradient->option) & (GFX_GRADIENT_HORIZONTAL)){
+		if ((gradient->option) & (GFX_GRADIENT_HORIZONTAL)) {
 
 			gfx_coord_t x_end = x + width;
 			if (map_x > 0){
@@ -257,7 +257,7 @@ void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option)
 				color_b += (delta_b * map_x);
 			}
 
-			for(gfx_coord_t index_x = x; index_x <= x_end ; index_x++){
+			for(gfx_coord_t index_x = x; index_x <= x_end ; index_x++) {
 
 				gfx_draw_vertical_line(index_x, y, height,
 						GFX_COLOR(
@@ -273,12 +273,12 @@ void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option)
 		} else {
 
 			gfx_coord_t y_end = y + width;
-			if (map_y  > 0){
+			if (map_y  > 0) {
 				color_r += (delta_r * map_y);
 				color_g += (delta_g * map_y);
 				color_b += (delta_b * map_y);
 			}
-			for(gfx_coord_t index_y = y; index_y <= y_end ; index_y++){
+			for(gfx_coord_t index_y = y; index_y <= y_end ; index_y++) {
 
 				gfx_draw_horizontal_line(x, index_y, width,
 						GFX_COLOR(
