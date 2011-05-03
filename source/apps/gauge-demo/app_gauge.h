@@ -42,16 +42,16 @@
 
 /**
  * \ingroup apps_demo_group
- * \defgroup app_widget_group Gauge demo application
+ * \defgroup gauge_demo_group Gauge demo application
  *
  * \brief This application is made to introduce users to the gauge widget
  * in the \ref gfx_wtk "Widget toolkit".
  *
  * Initially this application will draw a
  * \ref gfx_wtk_basic_frame "basic frame" filling the entire screen and add two
- * \ref gfx_wtk_gauge "gauge" with two \ref gfx_wtk_slider "sliders" for 
+ * \ref gfx_wtk_gauge "gauges" with two \ref gfx_wtk_slider "sliders" for 
  * input.
- * 
+ *
  *
  * @{
  */
