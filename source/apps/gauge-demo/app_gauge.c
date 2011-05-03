@@ -41,7 +41,6 @@
 #include <board.h>
 #include <string.h>
 
-
 #include <gfx/gfx.h>
 #include <gfx/win.h>
 #include <gfx/wtk.h>
@@ -52,11 +51,7 @@
 #include <string.h>
 #include <stream.h>
 
-
-
-#include "app_widget.h"
-
-
+#include "app_gauge.h"
 
 /**
  * \weakgroup app_widget_group
@@ -132,12 +127,13 @@ enum app_widget_ids {
 //! Gauge_two size on display
 #define GAUGE_TWO_SIZE              100
 
-//! Gauge line distance modifier (0-100%) (OUTER>INNER)
+//! Gauge outer line distance modifier (0-100%) (OUTER>INNER)
 #define GAUGE_OUTER_POS             90
+//! Gauge inner line distance modifier (0-100%) (OUTER>INNER)
 #define GAUGE_INNER_POS             30
-
-//! Second gauge line distance modifier (0-100%)
+//! Second gauge outer line distance modifier (0-100%) (OUTER>INNER)
 #define GAUGE_TWO_OUTER_POS         100
+//! Second gauge inner line distance modifier (0-100%) (OUTER>INNER)
 #define GAUGE_TWO_INNER_POS         0
 
 

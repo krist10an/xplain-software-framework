@@ -279,8 +279,6 @@ bool wtk_slider_set_value(struct wtk_slider *slider, uint8_t value);
 
 //! @}
 
-//! @}
-
 /**
  * \defgroup gfx_wtk_label Label widget
  * @{
@@ -385,8 +383,6 @@ struct wtk_gauge *wtk_gauge_create(struct win_window *parent,
 		gfx_color_t background_color, uint8_t option);
 struct win_window *wtk_gauge_as_child(struct wtk_gauge *gauge);
 uint8_t wtk_gauge_get_value(struct wtk_gauge *gauge);
-uint8_t wtk_trigtable_sin(uint8_t angle);
-uint8_t wtk_trigtable_cos(uint8_t angle);
 uint8_t wtk_gauge_get_test(struct wtk_gauge *gauge);
 bool wtk_gauge_set_value(struct wtk_gauge *gauge, uint8_t value);
 void wtk_gauge_set_colors(struct wtk_gauge *gauge,
@@ -399,20 +395,5 @@ uint8_t wtk_rescale_value(uint8_t value, uint8_t from_scale, uint8_t to_scale);
 void wtk_copy_string(char *dest, char const *source);
 
 void wtk_shade_pixel(gfx_color_t *pixel, uint8_t alpha);
- 
- /**
- * \defgroup gfx_wtk_trigtable Trigonometric sine table
- *
- * Contains a table holding trigonometric sine values from zero to ninety
- * degrees. Useful for drawing i.e. circles. 
- *
- * Contains two different functions for getting sin- and cos-values
- *
- * Best suited for small drawings, as the resolution of the table is quite low
- * @{
- */
-
-
-//! @}
 
 #endif /* WTK_H_INCLUDED */

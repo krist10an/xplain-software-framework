@@ -49,7 +49,7 @@
  *
  * Initially this application will draw a
  * \ref gfx_wtk_basic_frame "basic frame" filling the entire screen and add two
- * \ref gfx_wtk_gauge "gauge" with two\ref gfx_wtk_slider "sliders" for 
+ * \ref gfx_wtk_gauge "gauge" with two \ref gfx_wtk_slider "sliders" for 
  * input.
  * 
  *

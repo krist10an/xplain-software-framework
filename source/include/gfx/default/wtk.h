@@ -386,9 +386,10 @@ typedef uint8_t wtk_radio_group_size_t;
  * \ingroup gfx_wtk_gauge_options
  * @{
  */
-#ifndef CONFIG_WTK_GAUGE_USE_THICK_LINE
-//! Enables the use of thick indicator lines, comment out for thinner line.
-# define CONFIG_WTK_GAUGE_USE_THICK_LINE
+
+#ifndef WTK_GAUGE_NEEDLE_LINE_THICKNESS
+//! Line thickness for the needle. Currently only 1 and 3 pixels are supported.
+# define WTK_GAUGE_NEEDLE_LINE_THICKNESS 1
 #endif
 
 #ifndef WTK_GAUGE_OUTER_LINE_COLOR
@@ -422,7 +423,7 @@ typedef uint8_t wtk_radio_group_size_t;
 #endif
 
 #ifndef WTK_GAUGE_MIN_NEEDLE_PERCENT_SIZE
-//! Defines the maximum value for the needle size
+//! Defines the minimum value for the needle size
 #define WTK_GAUGE_MIN_NEEDLE_PERCENT_SIZE   0
 #endif
 

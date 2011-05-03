@@ -44,17 +44,19 @@
  * the gauge widget. The application has two different sliders which input 
  * values for the two separate gauges. It also demonstrates the use of some of 
  * the implemented options for the gauge.
- *
+ * 
+ * The documentation of the the demo application is found here: \ref apps_demo_group "Demo applications"
+ * 
+ *  This demo is also based upon the following modules:
  * - \ref gfx "Graphics display system"
  * - \ref gfx_gfx "Graphics drivers"
  * - \ref gfx_win "Window system"
  * - \ref gfx_wtk "Widget toolkit"
  * - \ref touch_driver_group "Touch drivers"
- * - \ref apps_training_group.
  */
 
 /**
- * \defgroup apps_group Applications
+ * \defgroup apps_demo_group Demo Applications
  */
 #include <dma.h>
 #include <led.h>
@@ -70,7 +72,7 @@
 #include <touch/touch.h>
 
 #include "app_calibrate.h"
-#include "app_widget.h"
+#include "app_gauge.h"
 
 static struct workqueue_task launch_application;
 
