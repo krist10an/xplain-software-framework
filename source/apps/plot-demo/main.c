@@ -69,7 +69,7 @@
 #include <touch/touch.h>
 
 #include "app_calibrate.h"
-#include "app_widget.h"
+#include "app_plot.h"
 
 static struct workqueue_task launch_application;
 

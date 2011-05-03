@@ -50,7 +50,7 @@
 #include <string.h>
 #include <stream.h>
 
-#include "app_widget.h"
+#include "app_plot.h"
 
 /**
  * \weakgroup app_widget_group
@@ -177,7 +177,7 @@ static bool widget_frame_command_handler(struct wtk_basic_frame *frame,
 
 	// Adds value from slider into the plot and redraws it.
 	case BUTTON_ID:
-		wtk_plot_add_value(plot,wtk_slider_get_value(slider));
+		wtk_plot_add_value(plot, wtk_slider_get_value(slider));
 		win_redraw(wtk_plot_as_child(plot));
 		break;
 
