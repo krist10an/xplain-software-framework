@@ -366,23 +366,6 @@ typedef uint8_t wtk_radio_group_size_t;
 //! @}
 
 /**
- * \ingroup gfx_wtk_trigtable
- * @{
- */
-
-#ifndef WTK_TRIG_TABLE_LENGTH
-//! Trigtable length.
-# define WTK_TRIG_TABLE_LENGTH        128
-#endif
-
-#ifndef WTK_TRIG_TABLE_MAX_VALUE
-//! Trigtable max value.
-# define WTK_TRIG_TABLE_MAX_VALUE     255
-#endif
-
-//! @}
-
-/**
  * \ingroup gfx_wtk_gauge_options
  * @{
  */
@@ -419,12 +402,12 @@ typedef uint8_t wtk_radio_group_size_t;
 
 #ifndef WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE
 //! Defines the maximum value for the needle size
-#define WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE   100
+# define WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE   100
 #endif
 
 #ifndef WTK_GAUGE_MIN_NEEDLE_PERCENT_SIZE
 //! Defines the minimum value for the needle size
-#define WTK_GAUGE_MIN_NEEDLE_PERCENT_SIZE   0
+# define WTK_GAUGE_MIN_NEEDLE_PERCENT_SIZE   0
 #endif
 
 //! @}

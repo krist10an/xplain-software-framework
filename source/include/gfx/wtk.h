@@ -390,6 +390,8 @@ void wtk_gauge_set_colors(struct wtk_gauge *gauge,
 
 //! @}
 
+//! @}
+
 
 uint8_t wtk_rescale_value(uint8_t value, uint8_t from_scale, uint8_t to_scale);
 void wtk_copy_string(char *dest, char const *source);
