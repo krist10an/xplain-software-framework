@@ -213,21 +213,21 @@ static void wtk_gauge_line_erase(struct win_clip_region const *clip,
 		struct win_area const *area, struct wtk_gauge *gauge)
 {
 	//! The outer x-axis start position of the gauge needle
-	gfx_coord_t gauge_needle_x_outer = 
+	gfx_coord_t gauge_needle_x_outer =
 		clip->origin.x + gauge->xrescale + gauge->g_outer_pos;
 
 	/**
 	 * The outer y-axis start position of the gauge needle. Has a -3 offset
 	 * to ensure that its within the gauge draw area.
 	 */
-	gfx_coord_t gauge_needle_y_outer = 
+	gfx_coord_t gauge_needle_y_outer =
 		clip->origin.y + area->size.y - gauge->yrescale - 3;
 
 	/**
 	 * The inner x-axis start position of the gauge needle. Has a -3 offset
 	 * to ensure that its within the gauge draw area.
 	 */
-	gfx_coord_t gauge_needle_x_inner = 
+	gfx_coord_t gauge_needle_x_inner =
 		clip->origin.x + area->size.x - gauge->g_inner_pos +
 		gauge->x2rescale - 3;
 
@@ -235,7 +235,7 @@ static void wtk_gauge_line_erase(struct win_clip_region const *clip,
 	 * The inner y-axis start position of the gauge needle. Has a -3 offset
 	 * to ensure that its within the gauge draw area.
 	 */
-	gfx_coord_t gauge_needle_y_inner = 
+	gfx_coord_t gauge_needle_y_inner =
 		clip->origin.y + area->size.y - gauge->y2rescale - 3;
 
 	//! Gauge middle line
@@ -287,7 +287,7 @@ static void wtk_gauge_draw_background(struct win_clip_region const *clip,
 	//! Outer filled circle
 	gfx_draw_filled_circle(clip->origin.x + gauge_area_length,
 			clip->origin.y + gauge_area_height, gauge_area_length,
-			WTK_GAUGE_OUTER_FILL_COLOR, GFX_QUADRANT1);
+			gauge->background_color, GFX_QUADRANT1);
 
 	/** 
 	 * Inner filled circle. Has -2 offset to the radius to ensure that its 
@@ -295,7 +295,7 @@ static void wtk_gauge_draw_background(struct win_clip_region const *clip,
 	 */
 	gfx_draw_filled_circle(clip->origin.x + gauge_area_length,
 			clip->origin.y + gauge_area_height,
-			gauge->g_inner_pos - 2, WTK_GAUGE_INNER_FILL_COLOR,
+			gauge->g_inner_pos - 2, gauge->fill_color,
 			GFX_QUADRANT1);
 
 	/**
@@ -455,7 +455,7 @@ static bool wtk_gauge_handler(struct win_window *win,
 				WTK_TRIG_TABLE_MAX_VALUE, 
 				area->size.x - 3 - gauge->g_outer_pos);
 
-		/** 
+		/**
 		 * Rescales the first y trigonometric value for usage in the 
 		 * draw function Uses -3 offset to ensure that its witin draw area
 		 */
@@ -463,14 +463,15 @@ static bool wtk_gauge_handler(struct win_window *win,
 				WTK_TRIG_TABLE_MAX_VALUE, 
 				area->size.y - 3 - gauge->g_outer_pos);
 
-		/** 
+		/**
 		 * Rescales the second x trigonometric value for usage in the 
 		 * draw function
 		 */
 		gauge->x2rescale = wtk_rescale_value(gauge->xangle,
 				WTK_TRIG_TABLE_MAX_VALUE, gauge->g_inner_pos);
 
-		/** Rescales the second y trigonometric value for usage in the 
+		/**
+		 * Rescales the second y trigonometric value for usage in the 
 		 * draw function
 		 */
 		gauge->y2rescale = wtk_rescale_value(gauge->yangle,
@@ -485,7 +486,8 @@ static bool wtk_gauge_handler(struct win_window *win,
 		return true;
 
 	case WIN_EVENT_DESTROY:
-		/** Free up all memory allocated by widget.
+		/**
+		 * Free up all memory allocated by widget.
 		 * The window is freed by the window system
 		 */
 		membag_free(gauge);
@@ -524,9 +526,13 @@ static bool wtk_gauge_handler(struct win_window *win,
  *
  * \param parent Pointer to parent ref win_window struct.
  * \param area Pointer to ref win_area struct with position and size of the
- *             gauge. Minimum size in both x and y direction is 3 pixels.
+ * gauge. Minimum size in both x and y direction is 3 pixels.
  * \param maximum Maximum value of the gauge.
  * \param value Initial value of the gauge.
+ * \param g_outer_pos Value for the endpoint of the needle in percent of
+ * total diameter
+ * \param g_inner_pos Value for the start point of the needle in percent of
+ * total diameter
  * \param fill_color Color for filled area.
  * \param background_color Color for background area.
  * \param option \ref gfx_wtk_gauge_options "Configuration options for gauge"
@@ -591,7 +597,6 @@ struct wtk_gauge *wtk_gauge_create(struct win_window *parent,
 	length -= 2;
 
 	// Checks if line pos is an accepted value, else set to max, fail safe
-	// Todo: could this be done with assert?
 	if(g_outer_pos < WTK_GAUGE_MIN_NEEDLE_PERCENT_SIZE ||
 			g_outer_pos > WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE) {
 		g_outer_pos = WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE;

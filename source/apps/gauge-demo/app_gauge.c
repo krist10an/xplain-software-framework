@@ -36,7 +36,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-
 #include <led.h>
 #include <board.h>
 #include <string.h>
@@ -78,68 +77,74 @@ enum app_widget_ids {
  * @{
  */
 
-//! Background color for application
+//! Background color for application.
 #define APP_BACKGROUND_COLOR        GFX_COLOR(77, 77, 77)
 
 //! @}
 
 /**
- * \name Widget sizes and positions
+ * \name Widget sizes and positions.
  *
  * @{
  */
 
-//! Label position on top of display
+//! Label position on top of display.
 #define LABEL_POS_X                 6
-//! Label position on top of display
+//! Label position on top of display.
 #define LABEL_POS_Y                 6
 
-//! Slider position
+//! Slider position.
 #define SLIDER_POS_X                5
-//! Slider position
+//! Slider position.
 #define SLIDER_POS_Y                25
-//! Slider size on display
+//! Slider size on display.
 #define SLIDER_SIZE_X               25
-//! Slider size on display
+//! Slider size on display.
 #define SLIDER_SIZE_Y               180
 
-//! Gauge position
+//! Gauge position.
 #define GAUGE_POS_X                 50
-//! Gauge position
+//! Gauge position.
 #define GAUGE_POS_Y                 40
-//! Gauge size on display
+//! Gauge size on display.
 #define GAUGE_SIZE                  150
 
-
-//! Slider_two position
+//! Slider_two position.
 #define SLIDER_TWO_POS_X            60
-//! Slider_two position
+//! Slider_two position.
 #define SLIDER_TWO_POS_Y            205
-//! Slider_two size on display
+//! Slider_two size on display.
 #define SLIDER_TWO_SIZE_X           255
-//! Slider_two size on display
+//! Slider_two size on display..
 #define SLIDER_TWO_SIZE_Y           25
 
-//! Gauge_two position
+//! Gauge_two position.
 #define GAUGE_TWO_POS_X             210
-//! Gauge_two position
+//! Gauge_two position.
 #define GAUGE_TWO_POS_Y             80
-//! Gauge_two size on display
+//! Gauge_two size on display.
 #define GAUGE_TWO_SIZE              100
 
-//! Gauge outer line distance modifier (0-100%) (OUTER>INNER)
+//! Gauge outer line distance modifier (0-100%) (OUTER must be larger than INNER).
 #define GAUGE_OUTER_POS             90
-//! Gauge inner line distance modifier (0-100%) (OUTER>INNER)
+//! Gauge inner line distance modifier (0-100%) (OUTER must be larger than INNER).
 #define GAUGE_INNER_POS             30
-//! Second gauge outer line distance modifier (0-100%) (OUTER>INNER)
+//! Second gauge outer line distance modifier (0-100%) (OUTER must be larger than INNER).
 #define GAUGE_TWO_OUTER_POS         100
-//! Second gauge inner line distance modifier (0-100%) (OUTER>INNER)
+//! Second gauge inner line distance modifier (0-100%) (OUTER must be larger than INNER).
 #define GAUGE_TWO_INNER_POS         0
 
+//! Gauge fill color.
+#define GAUGE_FILL_COLOR            GFX_COLOR(90, 90, 90)
+//! Gauge background color.
+#define GAUGE_BACKGROUND_COLOR      GFX_COLOR(100, 100, 100)
+//! Second gauge fill color.
+#define GAUGE_TWO_FILL_COLOR        GFX_COLOR(90, 90, 90)
+//! Second gauge background color.
+#define GAUGE_TWO_BACKGROUND_COLOR  GFX_COLOR(100, 100, 100)
 
-//! Gauge line height start position
+//! Gauge line height start position.
 #define GAUGE_START_DISPLACEMENT    0
-
 
 //! @}
 
@@ -225,14 +230,6 @@ static bool widget_frame_command_handler(struct wtk_basic_frame *frame,
 }
 
 /**
- * \brief Frame draw event handler
- *
- * This function will draw the contents of the sub-frame.
- *
- * \sa wtk_basic_frame_draw_handler_t
- */
-
-/**
  * \brief Setup gauge demo
  *
  * This function launches the gauge demo.
@@ -254,7 +251,7 @@ void app_widget_launch(struct workqueue_task *task) {
 
 	// Application frame
 
-	// Create a background bitmap using a solid color.
+	// Create a background bitmap using a solid color
 	frame_background.type = BITMAP_SOLID;
 	frame_background.data.color = APP_BACKGROUND_COLOR;
 
@@ -267,7 +264,7 @@ void app_widget_launch(struct workqueue_task *task) {
 	/*
 	 * Create a basic frame with a specified background and command event
 	 * handler. Check the return value if an error occured while creating
-	 * the widget.
+	 * the widget
 	 */
 	frame = wtk_basic_frame_create(win_root, &area, &frame_background, NULL,
 			widget_frame_command_handler, NULL);
@@ -275,31 +272,31 @@ void app_widget_launch(struct workqueue_task *task) {
 		goto error_frame;
 	}
 
-	// Get a pointer to the widget's window for adding sub-widgets.
+	// Get a pointer to the widget's window for adding sub-widgets
 	parent = wtk_basic_frame_as_child(frame);
 	/*
 	 * Draw the frame by showing the frame widget's window. Any
 	 * child-widgets and windows will not be shown before the parent
-	 * widget/window is shown.
+	 * widget/window is shown
 	 */
 	win_show(parent);
 
 	// Application label
 	area.pos.x = LABEL_POS_X;
 	area.pos.y = LABEL_POS_Y;
-	// Find an optimal size for the widget.
+	// Find an optimal size for the label
 	wtk_label_size_hint(&area.size, demo_string);
 
 	/*
 	 * Create the label and check the return value if an error occured
-	 * while creating the label.
+	 * while creating the label
 	 */
 	lbl = wtk_label_create(parent, &area, demo_string, false);
 	if (!lbl) {
 		goto error_widget;
 	}
 
-	// Draw the label by showing the label widget's window.
+	// Draw the label by showing the label widget's window
 	win_show(wtk_label_as_child(lbl));
 
 	// Application slider
@@ -310,7 +307,7 @@ void app_widget_launch(struct workqueue_task *task) {
 
 	/*
 	 * Create the slider and check the return value if an error occured
-	 * while creating the slider.
+	 * while creating the slider
 	 */
 	slider = wtk_slider_create(parent, &area, SLIDER_MAX_VALUE,
 			SLIDER_MAX_VALUE / 2, 
@@ -320,10 +317,10 @@ void app_widget_launch(struct workqueue_task *task) {
 		goto error_widget;
 	}
 
-	// Draw the slider by showing the slider widget's window.
+	// Draw the slider by showing the slider widget's window
 	win_show(wtk_slider_as_child(slider));
 
-	// Application slidertwo
+	// Application slider two
 	area.pos.x = SLIDER_TWO_POS_X;
 	area.pos.y = SLIDER_TWO_POS_Y;
 	area.size.x = SLIDER_TWO_SIZE_X;
@@ -331,7 +328,7 @@ void app_widget_launch(struct workqueue_task *task) {
 
 	/*
 	 * Create the slidertwo and check the return value if an error occured
-	 * while creating the slidertwo.
+	 * while creating the slider two
 	 */
 	slidertwo = wtk_slider_create(parent, &area, SLIDER_TWO_MAX_VALUE,
 			SLIDER_TWO_MAX_VALUE / 2, WTK_SLIDER_CMD_RELEASE,
@@ -340,12 +337,10 @@ void app_widget_launch(struct workqueue_task *task) {
 		goto error_widget;
 	}
 
-
-
-	// Draw the slider by showing the slider widget's window.
+	// Draw the slider by showing the slider widget's window
 	win_show(wtk_slider_as_child(slidertwo));
 
-	// Application gauge.
+	// Application gauge
 	area.pos.x = GAUGE_POS_X;
 	area.pos.y = GAUGE_POS_Y;
 	area.size.x = GAUGE_SIZE;
@@ -354,26 +349,26 @@ void app_widget_launch(struct workqueue_task *task) {
 
 	/*
 	 * Create the first gauge and check the return value if an error
-	 * occured while creating the gauge.
+	 * occured while creating the gauge
 	 */
 
 	gauge_background.type = BITMAP_SOLID;
 	gauge_background.data.color = GFX_COLOR(255, 255, 255);
 
-	gauge = wtk_gauge_create(parent, &area, &gauge_background, 
+	gauge = wtk_gauge_create(parent, &area, &gauge_background,
 		SLIDER_MAX_VALUE + GAUGE_START_DISPLACEMENT,
-			(SLIDER_MAX_VALUE + GAUGE_START_DISPLACEMENT) / 2, 
-			GAUGE_OUTER_POS, GAUGE_INNER_POS, GFX_COLOR(255, 0, 0),
-			GFX_COLOR(100, 100, 100), WTK_GAUGE_INVERT);
+			(SLIDER_MAX_VALUE + GAUGE_START_DISPLACEMENT) / 2,
+			GAUGE_OUTER_POS, GAUGE_INNER_POS, GAUGE_FILL_COLOR,
+			GAUGE_BACKGROUND_COLOR, WTK_GAUGE_INVERT);
 	if (!gauge) {
 		goto error_widget;
 	}
 
-	// Draw the gauge by showing the gauge widget's window.
+	// Draw the gauge by showing the gauge widget's window
 	win_show(wtk_gauge_as_child(gauge));
 
 
-	// Application gauge_two.
+	// Application gauge_two
 	area.pos.x = GAUGE_TWO_POS_X;
 	area.pos.y = GAUGE_TWO_POS_Y;
 	area.size.x = GAUGE_TWO_SIZE;
@@ -382,21 +377,21 @@ void app_widget_launch(struct workqueue_task *task) {
 
 	/*
 	 * Create the second gauge and check the return value if an error
-	 * occured while creating the gauge.
+	 * occured while creating the gauge
 	 */
-	gauge_two = wtk_gauge_create(parent, &area, NULL, 
+	gauge_two = wtk_gauge_create(parent, &area, NULL,
 		SLIDER_TWO_MAX_VALUE + GAUGE_START_DISPLACEMENT,
-		(SLIDER_TWO_MAX_VALUE + GAUGE_START_DISPLACEMENT) / 2, 
-		GAUGE_TWO_OUTER_POS, GAUGE_TWO_INNER_POS, GFX_COLOR(255, 0, 0),
-		GFX_COLOR(100, 100, 100), 0);
+		(SLIDER_TWO_MAX_VALUE + GAUGE_START_DISPLACEMENT) / 2,
+		GAUGE_TWO_OUTER_POS, GAUGE_TWO_INNER_POS, GAUGE_TWO_FILL_COLOR,
+		GAUGE_TWO_BACKGROUND_COLOR, 0);
 	if (!gauge_two) {
 		goto error_widget;
 	}
 
-	// Draw the second gauge by showing the gauge widget's window.
+	// Draw the second gauge by showing the gauge widget's window
 	win_show(wtk_gauge_as_child(gauge_two));
 
-	//! Gauge frame code
+	// Gauge frame code
 	area.pos.x += area.size.x + 10;
 	area.size.x = 50;
 	area.size.y = 20;
@@ -406,10 +401,10 @@ void app_widget_launch(struct workqueue_task *task) {
 	return;
 
 error_widget:
-	// Destroy widget and all sub-widgets.
+	// Destroy widget and all sub-widgets
 	win_destroy(wtk_basic_frame_as_child(frame));
 error_frame:
-	// Wait forever if an error occured during setup.
+	// Wait forever if an error occured during setup
 	while(1);
 }
 

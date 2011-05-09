@@ -390,16 +390,6 @@ typedef uint8_t wtk_radio_group_size_t;
 # define WTK_GAUGE_NEEDLE_COLOR       GFX_COLOR(170, 0, 0)
 #endif
 
-#ifndef WTK_GAUGE_OUTER_FILL_COLOR
-//! Defines the color of the outer filled area
-# define WTK_GAUGE_OUTER_FILL_COLOR   GFX_COLOR(100, 100, 100)
-#endif
-
-#ifndef WTK_GAUGE_INNER_FILL_COLOR
-//! Defines the color of the inner filled area
-# define WTK_GAUGE_INNER_FILL_COLOR   GFX_COLOR(90, 90, 90)
-#endif
-
 #ifndef WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE
 //! Defines the maximum value for the needle size
 # define WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE   100
