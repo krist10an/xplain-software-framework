@@ -398,4 +398,7 @@ void wtk_copy_string(char *dest, char const *source);
 
 void wtk_shade_pixel(gfx_color_t *pixel, uint8_t alpha);
 
+//! @}
+
+
 #endif /* WTK_H_INCLUDED */
