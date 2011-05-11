@@ -163,9 +163,9 @@ void gfx_gradient_set_options(struct gfx_gradient *gradient, uint8_t option)
 	/* if gradient is inverted set start color to calculated end color,
 	 * and invert delta color */
 	if ((gradient->option)&(GFX_GRADIENT_INVERT)){
-		color_r += (delta_r * (gradient->length - 1));
-		color_g += (delta_g * (gradient->length - 1));
-		color_b += (delta_b * (gradient->length - 1));
+		color_r += (delta_r * (gradient->length));
+		color_g += (delta_g * (gradient->length));
+		color_b += (delta_b * (gradient->length));
 
 		delta_r = -delta_r;
 		delta_g = -delta_g;
