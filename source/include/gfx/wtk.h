@@ -41,6 +41,8 @@
 #include <app/wtk.h>
 #include <gfx/win.h>
 #include <gfx/sysfont.h>
+#include <mainloop.h>
+
 
 /**
  * \ingroup gfx
@@ -345,6 +347,25 @@ void wtk_progress_bar_set_colors(struct wtk_progress_bar *bar,
 
 //! @}
 
+/**
+ * \defgroup gfx_wtk_dialogue_box Dialogue box widget
+ *
+ * Dialogue box widget provides storage structs for dialogue
+ * captions and command data.
+ *
+ * @{
+ */
+struct wtk_dialogue_box;
+
+struct win_window *wtk_dialogue_box_create(struct win_window *parent,
+		char *caption, char *second_caption, win_command_t command_data);
+		
+struct win_window *wtk_dialogue_box_as_child(
+		struct wtk_dialogue_box *dialogue_box);
+void *wtk_dialogue_box_get_custom_data(
+		const struct wtk_dialogue_box *dialogue_box);
+
+//! @}
 
 uint8_t wtk_rescale_value(uint8_t value, uint8_t from_scale, uint8_t to_scale);
 void wtk_copy_string(char *dest, char const *source);
