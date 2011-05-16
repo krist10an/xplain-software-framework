@@ -150,12 +150,9 @@ static bool widget_frame_command_handler(struct wtk_basic_frame *frame,
 		win_command_t command_data)
 {
 	char command = (char)(uintptr_t)command_data;
-
 	char *caption = "Dialogue box demo:";
-
 	char *second_caption = "Click 'OK' to increase counter";
-
-	struct win_window       *parent;
+	struct win_window *parent;
 
 	parent = wtk_basic_frame_as_child(frame);
 
@@ -191,7 +188,6 @@ static bool widget_frame_command_handler(struct wtk_basic_frame *frame,
 				second_caption = "Your causing wear on the screen!"; break;
 			default:
 				second_caption = "Click 'OK' to increase counter"; break;
-
 		}
 
 		/**
@@ -199,7 +195,6 @@ static bool widget_frame_command_handler(struct wtk_basic_frame *frame,
 		 *
 		 *
 		 */
-		
 		dialogue_box = wtk_dialogue_box_create(parent, caption, second_caption,
 				(win_command_t)DIALOGUE_ID);
 		break;
