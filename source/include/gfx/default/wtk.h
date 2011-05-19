@@ -385,6 +385,42 @@ typedef uint8_t wtk_radio_group_size_t;
 # define WTK_PLOT_TICK_MARKER_LENGTH           5
 #endif
 
+//! @}
+
+/**
+ * \ingroup gfx_wtk_gauge_options
+ * @{
+ */
+
+#ifndef WTK_GAUGE_NEEDLE_LINE_THICKNESS
+//! Line thickness for the needle. Currently only 1 and 3 pixels are supported.
+# define WTK_GAUGE_NEEDLE_LINE_THICKNESS 1
+#endif
+
+#ifndef WTK_GAUGE_OUTER_LINE_COLOR
+//! Defines the color of the outer line around the gauge.
+# define WTK_GAUGE_OUTER_LINE_COLOR   GFX_COLOR(0, 0, 0)
+#endif
+
+#ifndef WTK_GAUGE_INNER_LINE_COLOR
+//! Defines the color of the inner line around the gauge.
+# define WTK_GAUGE_INNER_LINE_COLOR   GFX_COLOR(0, 0, 0)
+#endif
+
+#ifndef WTK_GAUGE_NEEDLE_COLOR
+//! Defines the color of the gauge needle.
+# define WTK_GAUGE_NEEDLE_COLOR       GFX_COLOR(170, 0, 0)
+#endif
+
+#ifndef WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE
+//! Defines the maximum value for the needle size
+# define WTK_GAUGE_MAX_NEEDLE_PERCENT_SIZE   100
+#endif
+
+#ifndef WTK_GAUGE_MIN_NEEDLE_PERCENT_SIZE
+//! Defines the minimum value for the needle size
+# define WTK_GAUGE_MIN_NEEDLE_PERCENT_SIZE   0
+#endif
 
 //! @}
 

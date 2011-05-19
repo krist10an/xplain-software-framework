@@ -59,6 +59,8 @@
  * - \ref gfx_wtk_radio_button
  * - \ref gfx_wtk_slider
  * - \ref gfx_wtk_label
+ * - \ref gfx_wtk_gauge
+ * - \ref gfx_wtk_trigtable
  * @{
  */
 
@@ -343,6 +345,51 @@ uint8_t wtk_progress_bar_get_value(struct wtk_progress_bar *bar);
 bool wtk_progress_bar_set_value(struct wtk_progress_bar *bar, uint8_t value);
 void wtk_progress_bar_set_colors(struct wtk_progress_bar *bar,
 		gfx_color_t color1, gfx_color_t color2);
+		
+//! @}
+
+/**
+ * \defgroup gfx_wtk_gauge Gauge widget
+ *
+ * Gauge widget provides a gauge. Size and position can be configured.
+ * Can take input from userdefinable input.
+ * @{
+ */
+
+ /**
+ * \defgroup gfx_wtk_gauge_options Gauge widget options
+ * These options can be ORed together to specify the behaviour of a
+ * gauge widget when creating it with \ref wtk_gauge_create
+ * @{
+ */
+
+ /**
+ * \name Gauge widget invert configuration options.
+ * For use with the option parameter of \ref wtk_gauge_create
+ * @{
+ */
+//! Inverts the gauge traveling direction
+#define WTK_GAUGE_INVERT        (1 << 1)
+
+//! @}
+
+//! @}
+
+struct wtk_gauge;
+
+struct wtk_gauge *wtk_gauge_create(struct win_window *parent,
+		struct win_area const *area, struct gfx_bitmap *background,
+		uint8_t maximum, uint8_t value, uint8_t g_outer_pos,
+		uint8_t g_inner_pos, gfx_color_t fill_color,
+		gfx_color_t background_color, uint8_t option);
+struct win_window *wtk_gauge_as_child(struct wtk_gauge *gauge);
+uint8_t wtk_gauge_get_value(struct wtk_gauge *gauge);
+uint8_t wtk_gauge_get_test(struct wtk_gauge *gauge);
+bool wtk_gauge_set_value(struct wtk_gauge *gauge, uint8_t value);
+void wtk_gauge_set_colors(struct wtk_gauge *gauge,
+		gfx_color_t color1, gfx_color_t color2);
+
+//! @}
 
 //! @}
 
@@ -483,5 +530,6 @@ void wtk_copy_string(char *dest, char const *source);
 void wtk_shade_pixel(gfx_color_t *pixel, uint8_t alpha);
 
 //! @}
+
 
 #endif /* WTK_H_INCLUDED */
