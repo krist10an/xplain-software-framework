@@ -47,7 +47,6 @@
  * @{
  */
 
-
 /**
  * \brief Event command ID for the component widgets.
  *
@@ -73,7 +72,7 @@ enum app_widget_ids {
  *
  * \internal
  * \note Structure fields are only internally accessible, only pointers to
- *       structure is needed externally.
+ *       structure is needed externally
  *
  * \param caption          stores top string in dialogue box frame.
  * \param second_caption   stores bottom string in dialogue box frame.
@@ -125,8 +124,7 @@ static bool dialogue_box_command_handler(struct wtk_basic_frame *frame,
 
 		case BUTTON_OK_ID:
 
-
-			/* Send the supplied command event to the frame from 
+			/* Send the supplied command event to the frame from
 			 * which the dialogue box originated
 			 */
 
@@ -165,8 +163,10 @@ static void dialogue_box_draw_handler(struct win_window *win,
 {
 	// Draw the border rectangle for the dialogue box frame 
 	gfx_draw_rect(DIALOGUE_FRAME_POS_X, DIALOGUE_FRAME_POS_Y,
+
 		DIALOGUE_FRAME_SIZE_X, DIALOGUE_FRAME_SIZE_Y, 
 		DIALOGUE_FRAME_LINE_COLOR);
+
 }
 
 
@@ -375,10 +375,13 @@ struct win_window *wtk_dialogue_box_create(struct win_window *parent,
 		goto error_widget;
 	}
 
-	/**
-	 * Create the buttons, centering the buttons in the dialogue box frame 
-	 * and spaces them apart from eachother.
+	
+	/*
+	 * Centers the buttons in the dialogue box frame and spaces them apart
+	 * from each other.
+	 * 
 	 */
+
 	area.pos.x = DIALOGUE_FRAME_SIZE_X / 2 - BUTTON_SIZE_X - BUTTON_SPACING / 2;
 	area.pos.y = BUTTON_POS_Y;
 	area.size.x = BUTTON_SIZE_X;
@@ -391,9 +394,11 @@ struct win_window *wtk_dialogue_box_create(struct win_window *parent,
 		goto error_widget;
 	}
 
+
 	/* Centers the buttons in the dialogue box frame and spaces them apart 
 	 * from each other.
 	 */
+
 	area.pos.x = DIALOGUE_FRAME_SIZE_X / 2 + BUTTON_SPACING / 2;
 	area.pos.y = BUTTON_POS_Y;
 	

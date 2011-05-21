@@ -366,45 +366,74 @@ typedef uint8_t wtk_radio_group_size_t;
 //! @}
 
 /**
- * \ingroup gfx_wtk_dialogue_box
+ * \ingroud gfx_wtk_dialogue_box
  * @{
  */
-/** 
- * \note defined positions and sizes for dialogue box.
- */
 
+#ifndef DIALOGUE_FRAME_POS_X
 //! Dialogue box frame X position inside parent frame.
 #define DIALOGUE_FRAME_POS_X        40
+#endif
+
+#ifndef DIALOGUE_FRAME_POS_Y
 //! Dialogue box frame Y position inside parent frame.
 #define DIALOGUE_FRAME_POS_Y        50
+#endif
+
+#ifndef DIALOGUE_FRAME_SIZE_X
 //! Dialogue box horisontal size X.
 #define DIALOGUE_FRAME_SIZE_X      240
+#endif
+
+#ifndef DIALOGUE_FRAME_SIZE_Y
 //! Dialogue box vertical size Y.
 #define DIALOGUE_FRAME_SIZE_Y      120
+#endif
 
+#ifndef BUTTON_POS_Y
 //! Buttons Y position inside dialogue box frame.
 #define BUTTON_POS_Y                60
+#endif
+
+#ifndef BUTTON_SIZE_X
 //! Buttons horisontal size X.
 #define BUTTON_SIZE_X               90
+#endif
+
+#ifndef BUTTON_SIZE_Y
 //! Buttons vertical size Y.
 #define BUTTON_SIZE_Y               40
+#endif
+
+#ifndef BUTTON_SPACING
 //! Horisontal spacing between buttons on X axis.
 #define BUTTON_SPACING              20
+#endif
 
+#ifndef DIALOGUE_BOX_BACKGROUND
 //! Background color of dialogue box frame.
 #define DIALOGUE_BOX_BACKGROUND     GFX_COLOR(100, 100, 100)
-//! Frame line color of dialogue box frame.
-#define DIALOGUE_FRAME_LINE_COLOR   GFX_COLOR(0, 0, 0)
+#endif
 
+#ifndef DIALOGUE_FRAME_LINE_COLOR
+//! Line color of the dialogue gox frame. 
+#define DIALOGUE_FRAME_LINE_COLOR   GFX_COLOR(0, 0, 0)
+#endif
+
+#ifndef CAPTION_POS_X
 //! Caption position centered on top of dialogue box by dividing size in half.
 #define CAPTION_POS_X               DIALOGUE_FRAME_SIZE_X / 2
+#endif
+
+#ifndef CAPTION_POS_Y
 //! Caption distance down from top of dialogue box.
 #define CAPTION_POS_Y               10
+#endif
 
 //! Second caption position centered on top of dialogue box.
-#define SECOND_CAPTION_POS_X        CAPTION_POS_X
+#define SECOND_CAPTION_POS_X CAPTION_POS_X
 //! Second caption distance down from top of dialogue box.
-#define SECOND_CAPTION_POS_Y        40
+#define SECOND_CAPTION_POS_Y 40
 
 //! @}
 
